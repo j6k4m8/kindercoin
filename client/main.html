@@ -1,0 +1,63 @@
+<head>
+    <title>kindercoin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.0/p5.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Coming+Soon" rel="stylesheet">
+</head>
+
+<body>
+    <div class="centered">
+        <h1>kindercoin</h1>
+
+        {{> loginButtons }}
+
+        {{# if currentUser }}
+            {{> main }}
+        {{/if }}
+    </div>
+</body>
+
+
+<template name="main">
+    <h2>
+        ʞ{{ balance }},000,000
+    </h2>
+    <br />
+    {{> miner }}
+</template>
+
+
+
+<template name="miner">
+    <div id="captcha"></div>
+    <script>
+
+        var s = function (sketch) {
+
+            let word = window.word.text;
+
+            sketch.setup = function () {
+                sketch.createCanvas(200, 200);
+                sketch.background(0);
+            };
+
+            sketch.draw = function () {
+                sketch.background(255);
+
+                for (let i = 0; i < word.length; i ++) {
+                    sketch.textSize(sketch.random(30, 60))
+                    sketch.textFont("Coming Soon");
+                    sketch.fill(sketch.random(255), sketch.random(255), sketch.random(255));
+                    sketch.text(word[i], 32 * i, sketch.random(40, 70))
+                }
+            };
+        };
+
+        window.reloadp5 = function() {
+            var myp5 = new p5(s, captcha);
+        };
+
+        reloadp5();
+
+    </script>
+    <input id="answer" placeholder="Answer" />
+</template>
